@@ -1,0 +1,205 @@
+<domain type="kvm">
+  <name>9a5e6592-db9d-42f1-ac1d-26c1d1728517</name>
+  <description>vtpm-other-nosecureboot: vtpm vm template with secure boot disabled in OVMF, 1024x768 resolution, no disk</description>
+  <uuid>9a5e6592-db9d-42f1-ac1d-26c1d1728517</uuid>
+  <memory unit="KiB">1048576</memory>
+  <vcpu placement="static">1</vcpu>
+  <cpu>
+    <topology sockets="1" cores="1" threads="1"/>
+  </cpu>
+  <os>
+    <type xmlns:scaled="http://www.scalecomputing.com/scaled" arch="x86_64" machine="pc-q35-rhel8.6.0">hvm</type>
+    <loader xmlns:scaled="http://www.scalecomputing.com/scaled" readonly="yes" secure="yes" type="pflash">/usr/share/OVMF/OVMF_CODE.secboot.fd</loader>
+    <nvram>scribe:scribe/uefinvram</nvram>
+  </os>
+  <metadata>
+    <scale-metadata xmlns="http://www.scalecomputing.com/scaled">
+      <os uuid="os_other"/>
+      <cpu name="intel-core-skylake-amd64-9.3"/>
+      <machine name="scale-uefi-tpm-9.3"/>
+      <vtpm uuid="vtpm"/>
+    </scale-metadata>
+  </metadata>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+    <smm state="on"/>
+  </features>
+  <clock offset="utc">
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="rtc" tickpolicy="catchup"/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/usr/libexec/qemu-kvm</emulator>
+    <input type="tablet" bus="usb"/>
+    <controller type="virtio-serial" index="0">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x0"/>
+    </controller>
+    <channel type="unix">
+      <source mode="bind" path="/var/lib/libvirt/qemu/9a5e6592-db9d-42f1-ac1d-26c1d1728517.agent"/>
+      <target type="virtio" name="org.qemu.guest_agent.0"/>
+    </channel>
+    <memballoon model="none"/>
+    <controller type="usb" index="0" model="qemu-xhci">
+      <address type="pci" domain="0x0000" bus="0x00" slot="03"/>
+    </controller>
+    <controller type="pci" index="0" model="pcie-root"/>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x04" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x04" function="0x1"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x1"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x2"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x3"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x4"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x5"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x6"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x10" function="0x7"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x1"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x2"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x3"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x4"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x5"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x6"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x14" function="0x7"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x1"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x2"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x3"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x4"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x5"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x6"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x15" function="0x7"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x1"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x2"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x3"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x4"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x5"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x6"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x16" function="0x7"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x1"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x2"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x3"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x4"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x5"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x6"/>
+    </controller>
+    <controller type="pci" model="pcie-root-port">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x17" function="0x7"/>
+    </controller>
+    <disk device="cdrom">
+      <boot order="1"/>
+      <driver name="qemu" type="scribe" cache="none" discard="unmap"/>
+      <target dev="hda" bus="sata"/>
+      <readonly/>
+    </disk>
+    <interface type="bridge">
+      <mac address="7C:4C:58:C7:F3:85"/>
+      <model type="virtio"/>
+      <link state="up"/>
+      <driver queues="1"/>
+      <source bridge="lan"/>
+      <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
+    </interface>
+    <video>
+      <model type="qxl" ram="65536" vram="65536" vgamem="16384"/>
+    </video>
+    <graphics type="vnc" autoport="yes"/>
+  </devices>
+  <qemu:commandline xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0">
+    <qemu:arg value="-tpmdev"/>
+    <qemu:arg value="emulator,id=tpm-tpm0,chardev=chrtpm"/>
+    <qemu:arg value="-chardev"/>
+    <qemu:arg value="socket,id=chrtpm,path=/var/run/sctpm/9a5e6592-db9d-42f1-ac1d-26c1d1728517.sock"/>
+    <qemu:arg value="-device"/>
+    <qemu:arg value="tpm-tis,tpmdev=tpm-tpm0,id=tpm0"/>
+  </qemu:commandline>
+</domain>
+                                                                                                                                                                                                                  

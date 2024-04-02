@@ -1,0 +1,35 @@
+---
+- name: Import hc_ovmf_template vms
+  hosts: all
+
+  connection: ansible.builtin.local
+  gather_facts: false
+  strategy: host_pinned # free  #allows each cluster to start next task before all clusters have finished current task
+  environment:  # if set here - hypercore modules will automatically use this for each remote cluster - avoiding need to specify cluster_instance for each test
+    SC_HOST: "https://{{ inventory_hostname }}"
+    SC_USERNAME: "{{ scale_user }}"
+    SC_PASSWORD: "{{ scale_pass }}"
+
+  tasks:
+  - name: Vtpm-other-nosecureboot template - Ubuntu 20.04 - https import if not present # used to clone and cloud-init target VM
+    scale_computing.hypercore.vm_import:
+      vm_name: vtpm-other-nosecureboot
+      http_uri:
+        path: 'http://{{ httpserver }}/vtpm-other-nosecureboot'
+        file_name: vtpm-other-nosecureboot.xml
+    until: (vtpm-other-nosecureboot.msg is search("import complete"))  or (vtpm-other-nosecureboot.msg is search("already exists"))
+    retries: 2
+    delay: 5
+    ignore_errors: true  # not all sites have http configured so errors are expected
+    when: httpserver is defined
+    register: vtpm-other-nosecureboot
+
+  - name: Protect template from powering on
+    scale_computing.hypercore.vm_params:
+      vm_name: vtpm-other-nosecureboot.record.vmname
+      tags:
+        - template
+      vcpu: 0
+      power_state: stop
+      force_reboot: true
+      shutdown_timeout: 10
