@@ -3,8 +3,8 @@
   hosts: all
   vars:
     - image_name:
-      - "vtpm-other-nosecureboot"
-      - "uefi-other-nosecureboot"
+      - vtpm-other-nosecureboot
+      - uefi-other-nosecureboot
 
   connection: ansible.builtin.local
   gather_facts: false
@@ -20,7 +20,7 @@
       vm_name: "{{ item }}"
       http_uri:
         path: "https://github.com/ddemlow/hc_ovmf_templates/raw/master/{{ item }}/"
-        file_name: vtpm-other-nosecureboot.xml
+        file_name: "{{ item }}.xml"
     retries: 2
     delay: 5
     loop: "{{ image_name }}"
