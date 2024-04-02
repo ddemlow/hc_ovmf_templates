@@ -1,6 +1,10 @@
 ---
 - name: Import hc_ovmf_template vms
   hosts: all
+  vars:
+    - image_name:
+      - "vtpm-other-nosecureboot"
+      - "uefi-other-nosecureboot"
 
   connection: ansible.builtin.local
   gather_facts: false
@@ -11,25 +15,24 @@
     SC_PASSWORD: "{{ scale_pass }}"
 
   tasks:
-  - name: Vtpm-other-nosecureboot template - Ubuntu 20.04 - https import if not present # used to clone and cloud-init target VM
+  - name: Vtpm-other-nosecureboot template - https import if not present # used to clone and cloud-init target VM
     scale_computing.hypercore.vm_import:
-      vm_name: vtpm-other-nosecureboot
+      vm_name: "{{ item }}"
       http_uri:
-        path: 'http://{{ httpserver }}/vtpm-other-nosecureboot'
+        path: "https://github.com/ddemlow/hc_ovmf_templates/raw/master/{{ item }}/"
         file_name: vtpm-other-nosecureboot.xml
-    until: (vtpm-other-nosecureboot.msg is search("import complete"))  or (vtpm-other-nosecureboot.msg is search("already exists"))
     retries: 2
     delay: 5
-    ignore_errors: true  # not all sites have http configured so errors are expected
-    when: httpserver is defined
-    register: vtpm-other-nosecureboot
+    loop: "{{ image_name }}"
 
   - name: Protect template from powering on
     scale_computing.hypercore.vm_params:
-      vm_name: vtpm-other-nosecureboot.record.vmname
+      vm_name: "{{ item }}"
       tags:
         - template
       vcpu: 0
       power_state: stop
       force_reboot: true
       shutdown_timeout: 10
+    loop: "{{ image_name }}"
+
